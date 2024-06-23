@@ -1,14 +1,77 @@
-# Instruções de Uso
-Início do Ambiente Docker
+# Project Challenge: Looney Tunes 
 
+## Instruções de Uso
+
+  - Clonar o Projeto:
+    - SSH: `git@github.com:alinebury/looney-tunes.git`
+    - HTTPS: `https://github.com/alinebury/looney-tunes.git`
+
+### Início do Ambiente Docker
+  - Construa os containers Docker:
+    ```bash
+      docker-compose build
+    ```
+
+  - Inicie os containers:
+    ```bash
+      docker-compose up
+    ```
+
+  - Acessando o Container do Backend
+    #### Obs: Na primeira vez que você executar os comandos acima, pode ser necessário executar comandos adicionais dentro do container do backend.
+
+    - Listar os containers em execução:
+    ```bash
+      docker ps
+    ```
+
+    O retorno deve ser parecido com:
+    ```bash
+      CONTAINER ID   IMAGE          COMMAND                  CREATED       STATUS         PORTS                                                 NAMES
+      3fb46231ab9a   zen_backend    "docker-entrypoint.s…"   2 hours ago   Up 3 seconds   3000/tcp, 0.0.0.0:3001->3001/tcp, :::3001->3001/tcp   backend
+      b5ef775094bb   mongo:latest   "docker-entrypoint.s…"   2 hours ago   Up 3 seconds   0.0.0.0:27017->27017/tcp, :::27017->27017/tcp         mongo
+    ```
+
+    - Conectar ao container do backend:
+    ```bash
+      docker exec -it 3fb46231ab9a sh
+    ```
+
+    - Dentro do container do backend, instale todas as dependências do projeto:
+    ```bash
+      npm i
+    ```
+
+### Início do Ambiente Local
+Caso prefira rodar o projeto localmente sem Docker:
+
+  - Instale o MongoDB na sua máquina. Siga as instruções de instalação na documentação oficial do MongoDB
+
+    [Instalação MongoDB](https://www.mongodb.com/docs/manual/administration/install-community/)
+    
+    [MongoDB Compass](https://www.mongodb.com/try/download/compass)
+
+  - Crie uma base dados com o nome `mongodb:27017/tunes-looney`
+  - Execute o comando na raiz do projeto para instalar todas as dependências do projeto:
+    ```bash
+      npm i
+    ```
+  - Execute o projeto com o comando na raiz do projeto
+    ```bash
+      npm start
+    ```
+
+### Tecnologias Usadas
+  - JavaScript
+  - NodeJs
+  - Express
+  - MongoDB
+  - Jest
+
+## Testes
+  - Para executar os testes do projeto, execute o comando na raiz do projeto:
   ```bash
-    docker-compose build
-  ```
-
-Inicie os containers:
-
-  ```bash
-    docker-compose up
+    npm test
   ```
 
 # Endpoints Disponíveis
@@ -36,7 +99,7 @@ Inicie os containers:
         ```
 
   - Atualizar Usuário
-      - Endpoint: `localhost:3001/auth/:id` (6678696851312b00dcabb680)
+      - Endpoint: `localhost:3001/auth/:id`
         ```json
           {
             "email": "frangolino@email.com"
@@ -60,7 +123,7 @@ Inicie os containers:
     ```
 
   - Buscar Consultas
-    - Endpoint: `localhost:3001/appointments/?doctorId=6678640bca485f0053a7e3ed&start=2024-06-01&end=2024-08-01&status=scheduled`
+    - Endpoint: `localhost:3001/appointments/?doctorId={doctorId}&start=2024-06-01&end=2024-08-01&status=scheduled`
 
   - Atualizar Consultas
     - Endpoint: `localhost:3001/appointments/:id/update` (6678688f9efd5000ce6c387d)
@@ -114,7 +177,7 @@ Inicie os containers:
         ```
 
   - Buscar Agenda
-    - Endpoint: `localhost:3001/schedule/:id` (6678640bca485f0053a7e3ed)
+    - Endpoint: `localhost:3001/schedule/:id`
 
   - Atualizar Agenda
-    - Endpoint: `localhost:3001/schedule/:id/update` (6678640bca485f0053a7e3ed)
+    - Endpoint: `localhost:3001/schedule/:id/update`
